@@ -258,7 +258,8 @@
                 var characterHeight = $this.attr('data-numberAnimate-characterHeight') * 1;
                 var characterWidth = $this.attr('data-numberAnimate-characterWidth') * 1;
 
-                var newlyCreatedHoldingDiv; //if new characters are required, this will be set to one of the newly created ones..
+                //if new characters are required, this will be set to one of the newly created ones..
+                var newlyCreatedHoldingDiv;
 
                 //add/remove those at the start.. 
                 var largestCurrentPos = numberHolderDivs.attr('data-numberAnimate-pos') * 1;

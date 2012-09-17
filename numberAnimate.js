@@ -166,10 +166,10 @@
 
     var methods = {
         init: function (options) {
-            var settings = $.extend(options, {
+            var settings = $.extend({}, {
                 animationTimes: [500, 500, 500] //creation, animation, removal ms
-            });
-            
+            }, options);
+
             this.css('display', 'inline-block'); //otherwise height/width calculated incorrectly..
             
             $.each(this, function () {
@@ -263,7 +263,7 @@
 
                 //add/remove those at the start.. 
                 var largestCurrentPos = numberHolderDivs.attr('data-numberAnimate-pos') * 1;
-                if (largestCurrentPos === null) largestCurrentPos = 0;
+                if (isNaN(largestCurrentPos)) largestCurrentPos = 0;
                 var largestRequiredPos = indexOfPoint;
                 var docFragment, pos, character, index;
                 if (largestCurrentPos < largestRequiredPos) {
@@ -288,7 +288,7 @@
                 //add/remove at the end of the list..
                 var smallestCurrentPos =  numberHolderDivs.last()
                         .attr('data-numberAnimate-pos') * 1;
-                if (smallestCurrentPos === null) smallestCurrentPos = 1;
+                if (isNaN(smallestCurrentPos)) smallestCurrentPos = 1;
                 var smallestRequiredPos = indexOfPoint - newValue.length + 1;
                 if (smallestRequiredPos < smallestCurrentPos) {
                     docFragment = document.createDocumentFragment();

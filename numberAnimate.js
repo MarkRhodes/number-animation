@@ -263,6 +263,7 @@
 
                 //add/remove those at the start.. 
                 var largestCurrentPos = numberHolderDivs.attr('data-numberAnimate-pos') * 1;
+                if (!largestCurrentPos) largestCurrentPos = 0;
                 var largestRequiredPos = indexOfPoint;
                 var docFragment, pos, character, index;
                 if (largestCurrentPos < largestRequiredPos) {
@@ -287,6 +288,7 @@
                 //add/remove at the end of the list..
                 var smallestCurrentPos =  numberHolderDivs.last()
                         .attr('data-numberAnimate-pos') * 1;
+                if (!smallestCurrentPos) smallestCurrentPos = 1;
                 var smallestRequiredPos = indexOfPoint - newValue.length + 1;
                 if (smallestRequiredPos < smallestCurrentPos) {
                     docFragment = document.createDocumentFragment();

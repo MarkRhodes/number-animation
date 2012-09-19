@@ -1,8 +1,18 @@
+/*global define:true */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, evil:true, 
     laxbreak:true, bitwise:true, strict:true, undef:true, unused:true, browser:true,
     jquery:true, indent:4, curly:false, maxerr:50 */
 
-(function ($) {
+//Set the plugin up so that it'll work as a AMD module or regular import
+//See: https://github.com/umdjs/umd/blob/master/jqueryPlugin.js..
+(function (factory) {
+    "use strict";
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery'], factory);
+    } else {
+        factory(jQuery);
+    }
+}(function ($) {
     "use strict";
     
     //first figure out which CSS3 properties to set..
@@ -372,4 +382,4 @@
         }
     };
 
-})(jQuery);
+}));

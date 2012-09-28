@@ -1,4 +1,4 @@
-/*global define:true */
+/*global define:false, WebKitCSSMatrix:false */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, evil:true, 
     laxbreak:true, bitwise:true, strict:true, undef:true, unused:true, browser:true,
     jquery:true, indent:4, curly:false, maxerr:50 */
@@ -46,6 +46,13 @@
         transitionEndEvent = "transitionend";
     }
     
+    //allow the use of hardware accellerated transforms for older webkit browsers, adapted from:
+    //http://www.appmobi.com/documentation/content/Articles/Article_UsingBestPractices/index.html?r=8684
+    var translateOpen = window.WebKitCSSMatrix 
+                && 'm11' in new WebKitCSSMatrix() ? "translate3d(0, " : "translate(0, ";
+    var translateClose = window.WebKitCSSMatrix
+                && 'm11' in new WebKitCSSMatrix() ? "px ,0)" : "px)";
+
     /**
       * Binds the given function onto the given jQuery array $el on the transitionEndEvent and unbinds it after execution.
       * Also handles the case where the event doesn't fire, in which case a timeout is used to ensure execution, which runs
@@ -95,7 +102,7 @@
         } else {
             transformY = 0 - (indexOfChar / 2) * $holderDiv.height();
         }
-        innerStyle[css3Prefix + 'Transform'] = 'translateY(' + transformY + 'px)';
+        innerStyle[css3Prefix + 'Transform'] = translateOpen + transformY + translateClose;
     };
     
     //Function to create a new character wrapper div to wrap the given character
@@ -116,8 +123,12 @@
         }).attr("data-numberAnimate-pos", position);
         
         var innerDiv = $(document.createElement('div')).html(allChars);
+        //fix annoying flickering for older webkit browsers..
+        if (css3Prefix === 'Webkit')
+            innerDiv[0].style['-webkit-backface-visibility'] = 'hidden';
+
         //initially show blank..
-        innerDiv[0].style[css3Prefix + 'Transform'] = 'translateY(' + height + 'px)';
+        innerDiv[0].style[css3Prefix + 'Transform'] =  translateOpen + height + translateClose;
         holderDiv.append(innerDiv);
 
         //animate to the correct character when finished animating creation if necessary..
